@@ -34,4 +34,23 @@ public class Launch {
 
     @Indexed
     private String resource;
+
+    public String getValueByContext(Context context) {
+        switch (context) {
+            case user:
+                return getUser();
+            case organization:
+                return getOrganization();
+            case location:
+                return getLocation();
+            case patient:
+                return getPatient();
+            case encounter:
+                return getEncounter();
+            case resource:
+                return getResource();
+            default:
+                throw new IllegalArgumentException("context=" + context.name() + " is not supported by " + this.getClass().getSimpleName());
+        }
+    }
 }
