@@ -10,3 +10,11 @@ ribbon:
 spring:
   redis:
     host: dockerhost
+smart-auth:
+  context-initializers:
+    user: http://localhost:3000/ocp-ui/smartLogin
+    organization: http://localhost:3000/ocp-ui/organizationPicker
+    location: http://localhost:3000/ocp-ui/locationPicker
+    patient: http://localhost:3000/ocp-ui/patientPicker
+    encounter: http://localhost:3000/ocp-ui/encounterPicker
+    resource: http://localhost:3000/ocp-ui/resourcePicker

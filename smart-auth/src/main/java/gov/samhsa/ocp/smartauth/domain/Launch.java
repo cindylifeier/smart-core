@@ -30,5 +30,8 @@ public class Launch {
     private String patient;
 
     @Indexed
+    private String encounter;
+
+    @Indexed
     private String resource;
 }
