@@ -11,6 +11,9 @@ public interface LaunchService {
     @Transactional
     LaunchResponseDto mergeAndSave(String launchId, LaunchRequestDto launchRequest);
 
+    @Transactional
+    LaunchResponseDto overrideAndSave(String launchId, LaunchRequestDto launchRequest);
+
     @Transactional(readOnly = true)
     LaunchResponseDto get(String launchId);
 }

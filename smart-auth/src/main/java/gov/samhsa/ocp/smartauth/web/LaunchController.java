@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,5 +34,11 @@ public class LaunchController {
     public LaunchResponseDto mergeAndSave(@PathVariable("launchId") String launchId,
                                           @Valid @RequestBody LaunchRequestDto launchRequest) {
         return launchService.mergeAndSave(launchId, launchRequest);
+    }
+
+    @PutMapping("/{launchId}")
+    public LaunchResponseDto overrideAndSave(@PathVariable("launchId") String launchId,
+                                             @Valid @RequestBody LaunchRequestDto launchRequest) {
+        return launchService.overrideAndSave(launchId, launchRequest);
     }
 }
