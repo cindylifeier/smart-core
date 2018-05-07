@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
-@RedisHash(value = "launches", timeToLive = 60)
+@RedisHash(value = "launches", timeToLive = 60 * 5)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
