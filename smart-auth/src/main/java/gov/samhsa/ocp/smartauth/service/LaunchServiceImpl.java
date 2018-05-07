@@ -31,6 +31,16 @@ public class LaunchServiceImpl implements LaunchService {
     }
 
     @Override
+    @Transactional
+    public LaunchResponseDto mergeAndSave(String launchId, LaunchRequestDto launchRequest) {
+        final Launch launch = launchRepository.findById(launchId).orElseThrow(InvalidOrExpiredLaunchIdException::new);
+        modelMapper.map(launchRequest, launch);
+        final Launch savedLaunch = launchRepository.save(launch);
+        final LaunchResponseDto launchResponse = modelMapper.map(savedLaunch, LaunchResponseDto.class);
+        return launchResponse;
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public LaunchResponseDto get(String launchId) {
         final Launch launch = launchRepository.findById(launchId).orElseThrow(InvalidOrExpiredLaunchIdException::new);

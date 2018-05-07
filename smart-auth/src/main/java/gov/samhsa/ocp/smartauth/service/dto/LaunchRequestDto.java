@@ -1,10 +1,13 @@
 package gov.samhsa.ocp.smartauth.service.dto;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.NotBlank;
 
 @Data
 public class LaunchRequestDto {
-    @NotBlank
     private String user;
+    private String organization;
+    private String location;
+    private String patient;
+    private String encounter;
+    private String resource;
 }

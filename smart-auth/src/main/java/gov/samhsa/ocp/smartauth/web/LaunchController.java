@@ -28,4 +28,10 @@ public class LaunchController {
     public LaunchResponseDto create(@Valid @RequestBody LaunchRequestDto launchRequest) {
         return launchService.create(launchRequest);
     }
+
+    @PostMapping("/{launchId}")
+    public LaunchResponseDto mergeAndSave(@PathVariable("launchId") String launchId,
+                                          @Valid @RequestBody LaunchRequestDto launchRequest) {
+        return launchService.mergeAndSave(launchId, launchRequest);
+    }
 }
