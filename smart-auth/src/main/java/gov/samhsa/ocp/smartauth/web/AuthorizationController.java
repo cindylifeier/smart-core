@@ -1,8 +1,12 @@
 package gov.samhsa.ocp.smartauth.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.samhsa.ocp.smartauth.domain.Param;
 import gov.samhsa.ocp.smartauth.domain.ResponseType;
 import gov.samhsa.ocp.smartauth.service.AuthorizationService;
+import gov.samhsa.ocp.smartauth.service.LaunchService;
+import gov.samhsa.ocp.smartauth.service.dto.LaunchResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -22,15 +26,21 @@ public class AuthorizationController {
     @Autowired
     private AuthorizationService authorizationService;
 
+    @Autowired
+    private LaunchService launchService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @GetMapping("/authorize")
-    public ResponseEntity getAuthorization(
+    public ResponseEntity<String> getAuthorization(
             @RequestParam(Param.CLIENT_ID) String clientId,
             @RequestParam(Param.RESPONSE_TYPE) ResponseType responseType,
             @RequestParam(Param.SCOPE) String scopes,
             @RequestParam(Param.REDIRECT_URI) String redirectUri,
             @RequestParam(Param.STATE) String state,
             @RequestParam(Param.AUD) String aud,
-            @RequestParam(Param.LAUNCH) String launch) {
+            @RequestParam(Param.LAUNCH) String launch) throws JsonProcessingException {
         log.debug("{}={}", Param.CLIENT_ID, clientId);
         log.debug("{}={}", Param.RESPONSE_TYPE, responseType);
         log.debug("{}={}", Param.SCOPE, scopes);
@@ -46,7 +56,9 @@ public class AuthorizationController {
             headers.setLocation(contextInitializerRedirectUri);
             return new ResponseEntity(headers, HttpStatus.FOUND);
         } else {
-            return new ResponseEntity(HttpStatus.OK);
+            final LaunchResponseDto launchResponseDto = launchService.get(launch);
+            final String s = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(launchResponseDto);
+            return new ResponseEntity<>("<html><body><h1>No additional context needed</h1><pre>"+s+"</pre></body></html>",HttpStatus.OK);
         }
     }
 }
