@@ -47,7 +47,12 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public Optional<URI> getContextInitializerRedirectUri(String clientId, ResponseType responseType, String scope, String redirectUri, String state, String aud, String launch) {
+    public URI getRedirectUri(String clientId, ResponseType responseType, String scope, String redirectUri, String state, String aud, String launch) {
+        return getContextInitializerRedirectUri(clientId, responseType, scope, redirectUri, state, aud, launch)
+                .orElseGet(() -> getAuthorizationRedirectUri(clientId, responseType, scope, redirectUri, state, aud, launch));
+    }
+
+    private Optional<URI> getContextInitializerRedirectUri(String clientId, ResponseType responseType, String scope, String redirectUri, String state, String aud, String launch) {
         try {
             final List<Context> uninitializedRequiredContexts = getUninitializedRequiredContexts(launch, scope);
             if (!uninitializedRequiredContexts.isEmpty()) {
@@ -69,6 +74,25 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             throw new RuntimeException(e.getMessage(), e);
         }
         return Optional.empty();
+    }
+
+    private URI getAuthorizationRedirectUri(String clientId, ResponseType responseType, String scope, String redirectUri, String state, String aud, String launch) {
+        try {
+            final Map<String, String> params = new HashMap<>();
+            params.put(Param.CLIENT_ID, clientId);
+            params.put(Param.RESPONSE_TYPE, responseType.name());
+            params.put(Param.SCOPE, scope);
+            params.put(Param.REDIRECT_URI, redirectUri);
+            params.put(Param.STATE, state);
+            params.put(Param.AUD, aud);
+            params.put(Param.LAUNCH, launch);
+            final URI baseRedirectUri = new URI(smartAuthProperties.getOauth2Authorization());
+            final URI redirectUriWithParams = addParams(baseRedirectUri, params);
+            return redirectUriWithParams;
+        } catch (URISyntaxException e) {
+            log.error(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 
     private List<Context> getUninitializedRequiredContexts(String launch, String scope) {

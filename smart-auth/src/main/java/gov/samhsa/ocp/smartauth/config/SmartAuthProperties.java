@@ -18,4 +18,8 @@ public class SmartAuthProperties {
     @Valid
     @NotBlank
     private String contextInitializer;
+
+    @Valid
+    @NotBlank
+    private String oauth2Authorization;
 }
