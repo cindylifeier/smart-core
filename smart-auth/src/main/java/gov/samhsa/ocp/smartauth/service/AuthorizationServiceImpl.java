@@ -86,7 +86,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             params.put(Param.STATE, state);
             params.put(Param.AUD, aud);
             params.put(Param.LAUNCH, launch);
-            final URI baseRedirectUri = new URI(smartAuthProperties.getOauth2Authorization());
+            final URI baseRedirectUri = new URI(smartAuthProperties.getOauth2Authorize());
             final URI redirectUriWithParams = addParams(baseRedirectUri, params);
             return redirectUriWithParams;
         } catch (URISyntaxException e) {
@@ -105,6 +105,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 .filter(launchContextRequest -> !StringUtils.hasText(launchContext.getValueByContext(launchContextRequest)))
                 .distinct()
                 .collect(toList());
+        if (!uninitializedRequiredContexts.contains(Context.user) && !StringUtils.hasText(launchContext.getUser())) {
+            uninitializedRequiredContexts.add(Context.user);
+        }
         return uninitializedRequiredContexts;
     }
 }

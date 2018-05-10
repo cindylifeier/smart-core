@@ -21,5 +21,13 @@ public class SmartAuthProperties {
 
     @Valid
     @NotBlank
-    private String oauth2Authorization;
+    private String oauth2;
+
+    @Valid
+    @NotBlank
+    private String oauth2Authorize;
+
+    @Valid
+    @NotBlank
+    private String oauth2Token;
 }
