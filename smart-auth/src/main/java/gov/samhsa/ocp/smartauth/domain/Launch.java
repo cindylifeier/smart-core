@@ -35,6 +35,12 @@ public class Launch {
     @Indexed
     private String resource;
 
+    @Indexed
+    private Boolean needPatientBanner;
+
+    @Indexed
+    private String intent;
+
     public String getValueByContext(Context context) {
         switch (context) {
             case user:

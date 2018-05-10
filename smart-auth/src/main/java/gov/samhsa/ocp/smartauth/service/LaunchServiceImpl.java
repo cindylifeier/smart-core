@@ -25,6 +25,8 @@ public class LaunchServiceImpl implements LaunchService {
     public LaunchResponseDto create(LaunchRequestDto launchRequest) {
         final Launch launch = Launch.builder()
                 .user(launchRequest.getUser())
+                .intent(launchRequest.getIntent())
+                .needPatientBanner(launchRequest.getNeedPatientBanner())
                 .build();
         final Launch savedLaunch = launchRepository.save(launch);
         final LaunchResponseDto launchResponse = modelMapper.map(savedLaunch, LaunchResponseDto.class);
