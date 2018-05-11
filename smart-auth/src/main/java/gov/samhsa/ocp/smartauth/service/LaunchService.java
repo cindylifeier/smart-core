@@ -4,6 +4,8 @@ import gov.samhsa.ocp.smartauth.service.dto.LaunchRequestDto;
 import gov.samhsa.ocp.smartauth.service.dto.LaunchResponseDto;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 public interface LaunchService {
     @Transactional
     LaunchResponseDto create(LaunchRequestDto launchRequest);
@@ -15,5 +17,5 @@ public interface LaunchService {
     LaunchResponseDto overrideAndSave(String launchId, LaunchRequestDto launchRequest);
 
     @Transactional(readOnly = true)
-    LaunchResponseDto get(String launchId);
+    LaunchResponseDto get(String launchId, Optional<String> user);
 }

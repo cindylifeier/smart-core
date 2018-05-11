@@ -8,4 +8,6 @@ public interface LaunchRepository extends PagingAndSortingRepository<Launch, Str
     default Optional<Launch> findById(String id) {
         return Optional.ofNullable(findOne(id));
     }
+
+    Optional<Launch> findByIdAndUser(String id, String user);
 }

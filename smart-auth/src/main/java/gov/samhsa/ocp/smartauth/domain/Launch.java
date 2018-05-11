@@ -15,6 +15,7 @@ import org.springframework.data.redis.core.index.Indexed;
 @Builder
 public class Launch {
     @Id
+    @Indexed
     private String id;
 
     @Indexed

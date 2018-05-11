@@ -11,9 +11,9 @@ import java.util.Objects;
 @Configuration
 public class ModelMapperConfig {
     @Bean
-    public ModelMapper modelMapper(/*List<PropertyMap> propertyMaps*/) {
+    public ModelMapper modelMapper(List<PropertyMap> propertyMaps) {
         final ModelMapper modelMapper = new ModelMapper();
-//        propertyMaps.stream().filter(Objects::nonNull).forEach(modelMapper::addMappings);
+        propertyMaps.stream().filter(Objects::nonNull).forEach(modelMapper::addMappings);
         return modelMapper;
     }
 }

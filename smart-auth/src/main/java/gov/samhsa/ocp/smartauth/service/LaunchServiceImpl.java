@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Optional;
+
 @Service
 public class LaunchServiceImpl implements LaunchService {
 
@@ -72,8 +74,14 @@ public class LaunchServiceImpl implements LaunchService {
 
     @Override
     @Transactional(readOnly = true)
-    public LaunchResponseDto get(String launchId) {
-        final Launch launch = launchRepository.findById(launchId).orElseThrow(InvalidOrExpiredLaunchIdException::new);
+    public LaunchResponseDto get(String launchId, Optional<String> user) {
+        final Launch launch = user.isPresent() ?
+                launchRepository
+                        .findByIdAndUser(launchId, user.get())
+                        .orElseThrow(InvalidOrExpiredLaunchIdException::new) :
+                launchRepository
+                        .findById(launchId)
+                        .orElseThrow(InvalidOrExpiredLaunchIdException::new);
         final LaunchResponseDto launchResponse = modelMapper.map(launch, LaunchResponseDto.class);
         return launchResponse;
     }

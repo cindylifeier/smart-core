@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/launches")
@@ -21,8 +23,8 @@ public class LaunchController {
     private LaunchService launchService;
 
     @GetMapping("/{launchId}")
-    public LaunchResponseDto get(@PathVariable("launchId") String launchId) {
-        return launchService.get(launchId);
+    public LaunchResponseDto get(@PathVariable("launchId") String launchId, @RequestParam("user") Optional<String> user) {
+        return launchService.get(launchId, user);
     }
 
     @PostMapping()
