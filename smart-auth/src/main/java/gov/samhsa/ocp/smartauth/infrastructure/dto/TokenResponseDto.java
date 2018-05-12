@@ -21,4 +21,17 @@ public class TokenResponseDto {
     @JsonProperty("ext_attr")
     private Map<String, String> extraAttributes;
     private String jti;
+    // SMART Context
+    private String launch;
+    private String user;
+    private String organization;
+    private String location;
+    private String patient;
+    private String encounter;
+    private String resource;
+    @JsonProperty("need_patient_banner")
+    private Boolean needPatientBanner;
+    private String intent;
+    @JsonProperty("smart_style_url")
+    private String smartStyleUrl;
 }
