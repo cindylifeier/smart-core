@@ -1,6 +1,6 @@
-# SMART Authorization Service
+# SMART on FHIR Core Service
 
-The SMART Authorization Service is a Spring Boot project provides RESTful endpoints to manage SMART App authorization process.
+The SMART on FHIR Core Service is a Spring Boot project provides endpoints to manage SMART App authorization process.
 
 ## Build
 
