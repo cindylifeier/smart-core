@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>gov.samhsa.ocp</groupId>
-	<artifactId>smart-auth</artifactId>
+	<artifactId>smart-core</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>smart-auth</name>
-	<description>Omnibus Care Plan - SMART Authorization</description>
+	<name>smart-core</name>
+	<description>Omnibus Care Plan - SMART on FHIR Core Service</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
