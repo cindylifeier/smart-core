@@ -15,6 +15,8 @@ public class TokenResponseDto {
     private String tokenType;
     @JsonProperty("refresh_token")
     private String refreshToken;
+    @JsonProperty("id_token")
+    private String idToken;
     @JsonProperty("expires_in")
     private int expiresIn;
     private String scope;
