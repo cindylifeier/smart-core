@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/launches")
+@RequestMapping("/launch")
 public class LaunchController {
     @Autowired
     private LaunchService launchService;
