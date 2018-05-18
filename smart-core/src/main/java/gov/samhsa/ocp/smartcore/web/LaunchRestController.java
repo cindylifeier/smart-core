@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/launch")
-public class LaunchController {
+public class LaunchRestController {
     @Autowired
     private LaunchService launchService;
 

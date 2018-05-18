@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import static gov.samhsa.ocp.smartcore.config.Constants.NEED_PATIENT_BANNER;
+import static gov.samhsa.ocp.smartcore.config.Constants.SMART_STYLE_URL;
+
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LaunchResponseDto {
@@ -14,9 +17,9 @@ public class LaunchResponseDto {
     private String patient;
     private String encounter;
     private String resource;
-    @JsonProperty("need_patient_banner")
+    @JsonProperty(NEED_PATIENT_BANNER)
     private Boolean needPatientBanner;
     private String intent;
-    @JsonProperty("smart_style_url")
+    @JsonProperty(SMART_STYLE_URL)
     private String smartStyleUrl;
 }

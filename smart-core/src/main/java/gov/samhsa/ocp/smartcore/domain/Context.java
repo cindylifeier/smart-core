@@ -5,9 +5,10 @@ public enum Context {
     user, organization, location, patient, encounter, resource;
 
     public static final String LAUNCH_SCOPE_PREFIX = "launch/";
+    public static final String EMPTY_STRING = "";
 
     public static Context fromLaunchScope(String launchScope) {
-        return Context.valueOf(launchScope.replaceFirst(LAUNCH_SCOPE_PREFIX, ""));
+        return Context.valueOf(launchScope.replaceFirst(LAUNCH_SCOPE_PREFIX, EMPTY_STRING));
     }
 
     public String getLaunchScope() {

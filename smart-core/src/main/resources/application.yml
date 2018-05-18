@@ -15,3 +15,13 @@ smart-core:
   oauth2: http://localhost:8080/uaa
   oauth2-authorize: ${smart-core.oauth2}/oauth/authorize
   oauth2-token: ${smart-core.oauth2}/oauth/token
+  public-client-secret: changeit
+  fhir: http://localhost:8080/fhir/baseDstu3
+security:
+  oauth2:
+    client:
+      client-id: smart-core
+      client-secret: changeit
+      access-token-uri: ${smart-core.oauth2-token}
+  basic:
+    enabled: false

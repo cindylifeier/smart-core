@@ -30,4 +30,12 @@ public class SmartCoreProperties {
     @Valid
     @NotBlank
     private String oauth2Token;
+
+    @Valid
+    @NotBlank
+    private String publicClientSecret;
+
+    @Valid
+    @NotBlank
+    private String fhir;
 }
