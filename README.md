@@ -1,6 +1,6 @@
-# SMART Authorization Service
+# SMART on FHIR Core Service
 
-The SMART Authorization Service is a Spring Boot project provides RESTful endpoints to manage SMART App authorization process.
+The SMART on FHIR Core Service is a Spring Boot project that provides endpoints to manage SMART App authorization process.
 
 ## Build
 
@@ -18,7 +18,7 @@ To build the project, navigate to the folder that contains the `pom.xml` using t
 + To build a JAR:
     + For Windows, run `mvnw.cmd clean install`
     + For *nix systems, run `mvnw clean install`
-+ To build a Docker Image (this will create an image with `bhits/smart-auth:latest` tag):
++ To build a Docker Image (this will create an image with `bhits/smart-core:latest` tag):
     + For Windows, run `mvnw.cmd clean install & cd web & ..\mvnw.cmd clean package docker:build & cd..`
     + For *nix systems, run `mvnw clean install; cd ./web; ../mvnw clean package docker:build; cd ..`
 
@@ -29,8 +29,8 @@ To build the project, navigate to the folder that contains the `pom.xml` using t
 ### Commands
 
 This is a [Spring Boot](https://projects.spring.io/spring-boot/) project and serves the project via an embedded Tomcat instance. Therefore, there is no need for a separate application server to run this service.
-+ Run as a JAR file: `java -jar smart-auth-x.x.x-SNAPSHOT.jar <additional program arguments>`
-+ Run as a Docker Container: `docker run -d bhits/smart-auth:latest <additional program arguments>`
++ Run as a JAR file: `java -jar smart-core-x.x.x-SNAPSHOT.jar <additional program arguments>`
++ Run as a Docker Container: `docker run -d bhits/smart-core:latest <additional program arguments>`
 
 *NOTE: In order for this Service to fully function as a microservice in the OCP application, it is required to setup the dependency micro-services and the support level infrastructure. Please refer to the Consent2Share Deployment Guide in the corresponding Consent2Share release (see [Consent2Share Releases Page](https://github.com/bhits-dev/consent2share/releases)) for instructions to setup the Consent2Share infrastructure.*
 
@@ -44,19 +44,19 @@ This project can run with the default configuration, which is targeted for a loc
 
 #### Override a Configuration Using Program Arguments While Running as a JAR:
 
-+ `java -jar smart-auth-x.x.x-SNAPSHOT.jar --server.port=80 --spring.datasource.password=strongpassword`
++ `java -jar smart-core-x.x.x-SNAPSHOT.jar --server.port=80 --spring.datasource.password=strongpassword`
 
 #### Override a Configuration Using Program Arguments While Running as a Docker Container:
 
-+ `docker run -d bhits/smart-auth:latest --server.port=80 --spring.datasource.password=strongpassword`
++ `docker run -d bhits/smart-core:latest --server.port=80 --spring.datasource.password=strongpassword`
 
 + In a `docker-compose.yml`, this can be provided as shown below:
 ```yml
 version: '3.4'
 services:
 ...
-  smart-auth.ocp.com:
-    image: "bhits/smart-auth:latest"
+  smart-core.ocp.com:
+    image: "bhits/smart-core:latest"
     command: ["--server.port=80","--spring.datasource.password=strongpassword"]
 ...
 ```
@@ -68,18 +68,18 @@ For simplicity in development and testing environments, SSL is **NOT** enabled b
 
 #### Enable SSL While Running as a JAR
 
-+ `java -jar smart-auth-x.x.x-SNAPSHOT.jar --spring.profiles.active=ssl --server.ssl.key-store=/path/to/ssl_keystore.keystore --server.ssl.key-store-password=strongkeystorepassword`
++ `java -jar smart-core-x.x.x-SNAPSHOT.jar --spring.profiles.active=ssl --server.ssl.key-store=/path/to/ssl_keystore.keystore --server.ssl.key-store-password=strongkeystorepassword`
 
 #### Enable SSL While Running as a Docker Container
 
-+ `docker run -d -v "/path/on/dockerhost/ssl_keystore.keystore:/path/to/ssl_keystore.keystore" bhits/smart-auth:latest --spring.profiles.active=ssl --server.ssl.key-store=/path/to/ssl_keystore.keystore --server.ssl.key-store-password=strongkeystorepassword`
++ `docker run -d -v "/path/on/dockerhost/ssl_keystore.keystore:/path/to/ssl_keystore.keystore" bhits/smart-core:latest --spring.profiles.active=ssl --server.ssl.key-store=/path/to/ssl_keystore.keystore --server.ssl.key-store-password=strongkeystorepassword`
 + In a `docker-compose.yml`, this can be provided as follows:
 ```yml
 version: '3.4'
 services:
 ...
-  smart-auth.ocp.com:
-    image: "bhits/smart-auth:latest"
+  smart-core.ocp.com:
+    image: "bhits/smart-core:latest"
     command: ["--spring.profiles.active=ssl","--server.ssl.key-store=/path/to/ssl_keystore.keystore", "--server.ssl.key-store-password=strongkeystorepassword"]
     volumes:
       - /path/on/dockerhost/ssl_keystore.keystore:/path/to/ssl_keystore.keystore
@@ -90,7 +90,7 @@ services:
 
 ### Override Java CA Certificates Store In Docker Environment
 
-Java has a default CA Certificates Store that allows it to trust well-known certificate authorities. For development and testing purposes, one might want to trust additional self-signed certificates. In order to override the default Java CA Certificates Store in a Docker container, one can mount a custom `cacerts` file over the default one in the Docker image as follows: `docker run -d -v "/path/on/dockerhost/to/custom/cacerts:/etc/ssl/certs/java/cacerts" bhits/smart-auth:latest`
+Java has a default CA Certificates Store that allows it to trust well-known certificate authorities. For development and testing purposes, one might want to trust additional self-signed certificates. In order to override the default Java CA Certificates Store in a Docker container, one can mount a custom `cacerts` file over the default one in the Docker image as follows: `docker run -d -v "/path/on/dockerhost/to/custom/cacerts:/etc/ssl/certs/java/cacerts" bhits/smart-core:latest`
 
 *NOTE: The `cacerts` references given in the volume mapping above are files, not directories.*
 
