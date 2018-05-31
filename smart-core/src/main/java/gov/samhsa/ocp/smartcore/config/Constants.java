@@ -31,4 +31,6 @@ public interface Constants {
     String REDIRECT_PREFIX = "redirect:";
     String AUTHORIZATION_HEADER = "Authorization";
     String BASIC_AUTH_PREFIX = "Basic ";
+    // Clients
+    String AUTHORIZATION_CODE="authorization_code";
 }
