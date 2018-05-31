@@ -27,6 +27,11 @@ public class LaunchServiceImpl implements LaunchService {
     public LaunchResponseDto create(LaunchRequestDto launchRequest) {
         final Launch launch = Launch.builder()
                 .user(launchRequest.getUser())
+                .patient(launchRequest.getPatient())
+                .organization(launchRequest.getOrganization())
+                .location(launchRequest.getLocation())
+                .encounter(launchRequest.getEncounter())
+                .resource(launchRequest.getResource())
                 .intent(launchRequest.getIntent())
                 .needPatientBanner(launchRequest.getNeedPatientBanner())
                 .build();

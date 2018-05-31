@@ -13,6 +13,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static gov.samhsa.ocp.smartcore.config.Constants.ISS;
 import static gov.samhsa.ocp.smartcore.config.Constants.LAUNCH;
@@ -29,13 +30,15 @@ public class LauncherServiceImpl implements LauncherService {
     private LaunchService launchService;
 
     @Override
-    public URI getLaunchRedirectUri(String clientId) {
+    public URI getLaunchRedirectUri(String clientId, Optional<String> launch) {
         try {
-            final LaunchResponseDto launchResponseDto = launchService
-                    .create(LaunchRequestDto
+            // If passed use existing launch, else create a new one
+            final LaunchResponseDto launchResponseDto = launch
+                    .map(l -> launchService.get(l, Optional.empty()))
+                    .orElseGet(() -> launchService.create(LaunchRequestDto
                             .builder()
                             .needPatientBanner(true)
-                            .build());
+                            .build()));
             final ClientMetaDto clientMeta = oAuth2ClientRestClient.getClientMeta(clientId);
             final URI uri = new URI(clientMeta.getAppLaunchUrl());
             final Map<String, String> params = new HashMap<>();
@@ -46,6 +49,5 @@ public class LauncherServiceImpl implements LauncherService {
         } catch (URISyntaxException e) {
             throw new UnauthorizedException();
         }
-
     }
 }
