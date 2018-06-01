@@ -1,5 +1,6 @@
 package gov.samhsa.ocp.smartcore.infrastructure.dto;
 
+import gov.samhsa.ocp.smartcore.service.dto.ClientType;
 import lombok.Data;
 
 import static gov.samhsa.ocp.smartcore.config.Constants.AUTHORIZATION_CODE;
@@ -12,5 +13,5 @@ public class ClientDto {
     private String[] scope;
     private String name;
     private String client_secret;
-    private boolean publicClient;
+    private ClientType client_type;
 }

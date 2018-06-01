@@ -2,18 +2,22 @@ package gov.samhsa.ocp.smartcore.service.dto;
 
 import lombok.Data;
 
-import static gov.samhsa.ocp.smartcore.config.Constants.AUTHORIZATION_CODE;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class ClientDetailDto {
+    @NotNull
     private ClientType client_type;
+    @NotNull
     private String client_id;
-    private String[] authorized_grant_types={AUTHORIZATION_CODE};
+    @NotNull
     private String[] redirect_uri;
+    @NotNull
     private String[] scope;
+    @NotNull
     private String name;
     private String client_secret;
-    private boolean showOnHomePage=false;
+    @NotNull
     private String appLaunchUrl;
     private String appIcon;
 }
