@@ -67,7 +67,8 @@ public class ClientServiceImpl implements ClientService {
         List<ClientDetailDto> clientDetailDtos = new LinkedList<>();
 
         clientMetaDtos.stream().forEach(clientMetaDto -> {
-            ClientDetailDto clientDetailDto = modelMapper.map(clientDtos.stream().filter(clientDto -> clientDto.getClient_id().equals(clientMetaDto.getClientId())).findFirst(), ClientDetailDto.class);
+            ClientDto client = clientDtos.stream().filter(clientDto -> clientDto.getClient_id().equals(clientMetaDto.getClientId())).findFirst().get();
+            ClientDetailDto clientDetailDto = modelMapper.map(client, ClientDetailDto.class);
             clientDetailDto.setAppIcon(clientMetaDto.getAppIcon());
             clientDetailDto.setAppLaunchUrl(clientMetaDto.getAppLaunchUrl());
             clientDetailDtos.add(clientDetailDto);
