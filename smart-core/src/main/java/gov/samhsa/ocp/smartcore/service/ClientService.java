@@ -10,5 +10,14 @@ public interface ClientService {
     List<ClientMetaDto> getAllClientMeta();
 
     @Transactional
+    List<ClientDetailDto> getAllClients();
+
+    @Transactional
     void createClient(ClientDetailDto clientDto);
+
+    @Transactional
+    void deleteClient(String clientId);
+
+    @Transactional
+    void updateClient(String clientId, ClientDetailDto clientDto);
 }
