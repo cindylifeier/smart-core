@@ -1,5 +1,6 @@
 package gov.samhsa.ocp.smartcore.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -7,16 +8,21 @@ import javax.validation.constraints.NotNull;
 @Data
 public class ClientDetailDto {
     @NotNull
-    private ClientType client_type;
+    @JsonProperty("client_type")
+    private ClientType clientType;
     @NotNull
-    private String client_id;
+    @JsonProperty("client_id")
+    private String clientId;
     @NotNull
-    private String[] redirect_uri;
+    @JsonProperty("redirect_uri")
+    private String[] redirectUri;
     @NotNull
     private String[] scope;
     @NotNull
     private String name;
-    private String client_secret;
+
+    @JsonProperty("client_secret")
+    private String clientSecret;
     @NotNull
     private String appLaunchUrl;
     private String appIcon;

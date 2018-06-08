@@ -38,21 +38,21 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional
     public void createClient(ClientDetailDto clientDetailDto) {
-        if(clientDetailDto.getClient_type().equals(ClientType.PUBLIC)){
-            clientDetailDto.setClient_secret(smartCoreProperties.getPublicClientSecret());
+        if(clientDetailDto.getClientType().equals(ClientType.PUBLIC)){
+            clientDetailDto.setClientSecret(smartCoreProperties.getPublicClientSecret());
         }
         final ClientDto clientDto = oAuth2ClientRestClient.createClient(modelMapper.map(clientDetailDto, ClientDto.class));
-        final ClientMetaDto clientMetaDto = oAuth2ClientRestClient.createClientMeta(clientDto.getClient_id(),modelMapper.map(clientDetailDto, ClientMetaDto.class));
+        final ClientMetaDto clientMetaDto = oAuth2ClientRestClient.createClientMeta(clientDto.getClientId(),modelMapper.map(clientDetailDto, ClientMetaDto.class));
     }
 
     @Override
     @Transactional
     public void updateClient(String clientId, ClientDetailDto clientDetailDto) {
-        if(clientDetailDto.getClient_type().equals(ClientType.PUBLIC)){
-            clientDetailDto.setClient_secret(smartCoreProperties.getPublicClientSecret());
+        if(clientDetailDto.getClientType().equals(ClientType.PUBLIC)){
+            clientDetailDto.setClientSecret(smartCoreProperties.getPublicClientSecret());
         }
         final ClientDto clientDto = oAuth2ClientRestClient.updateClient(clientId, modelMapper.map(clientDetailDto, ClientDto.class));
-        final ClientMetaDto clientMetaDto = oAuth2ClientRestClient.createClientMeta(clientDto.getClient_id(),modelMapper.map(clientDetailDto, ClientMetaDto.class));
+        final ClientMetaDto clientMetaDto = oAuth2ClientRestClient.createClientMeta(clientDto.getClientId(),modelMapper.map(clientDetailDto, ClientMetaDto.class));
     }
 
     @Override
@@ -73,7 +73,7 @@ public class ClientServiceImpl implements ClientService {
         List<ClientDetailDto> clientDetailDtos = new LinkedList<>();
 
         clientMetaDtos.stream().forEach(clientMetaDto -> {
-            ClientDto client = clientDtos.stream().filter(clientDto -> clientDto.getClient_id().equals(clientMetaDto.getClientId())).findFirst().get();
+            ClientDto client = clientDtos.stream().filter(clientDto -> clientDto.getClientId().equals(clientMetaDto.getClientId())).findFirst().get();
             ClientDetailDto clientDetailDto = modelMapper.map(client, ClientDetailDto.class);
             clientDetailDto.setAppIcon(clientMetaDto.getAppIcon());
             clientDetailDto.setAppLaunchUrl(clientMetaDto.getAppLaunchUrl());
