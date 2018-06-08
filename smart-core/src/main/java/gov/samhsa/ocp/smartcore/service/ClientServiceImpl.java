@@ -9,6 +9,7 @@ import gov.samhsa.ocp.smartcore.service.dto.ClientType;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.LinkedList;
@@ -28,12 +29,14 @@ public class ClientServiceImpl implements ClientService {
     private SmartCoreProperties smartCoreProperties;
 
     @Override
+    @Transactional(readOnly = true)
     public List<ClientMetaDto> getAllClientMeta() {
         return oAuth2ClientRestClient.getAllClientMeta().stream()
                 .filter(meta -> StringUtils.hasText(meta.getAppLaunchUrl()))
                 .collect(Collectors.toList());
     }
     @Override
+    @Transactional
     public void createClient(ClientDetailDto clientDetailDto) {
         if(clientDetailDto.getClient_type().equals(ClientType.PUBLIC)){
             clientDetailDto.setClient_secret(smartCoreProperties.getPublicClientSecret());
@@ -43,6 +46,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @Transactional
     public void updateClient(String clientId, ClientDetailDto clientDetailDto) {
         if(clientDetailDto.getClient_type().equals(ClientType.PUBLIC)){
             clientDetailDto.setClient_secret(smartCoreProperties.getPublicClientSecret());
@@ -52,11 +56,13 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @Transactional
     public void deleteClient(String clientId) {
         oAuth2ClientRestClient.deleteClient(clientId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ClientDetailDto> getAllClients() {
         List<ClientMetaDto> clientMetaDtos = oAuth2ClientRestClient.getAllClientMeta().stream()
                 .filter(meta -> StringUtils.hasText(meta.getAppLaunchUrl()))

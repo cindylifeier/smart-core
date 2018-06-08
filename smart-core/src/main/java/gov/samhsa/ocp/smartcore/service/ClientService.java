@@ -7,9 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface ClientService {
+    @Transactional(readOnly = true)
     List<ClientMetaDto> getAllClientMeta();
 
-    @Transactional
+    @Transactional(readOnly = true)
     List<ClientDetailDto> getAllClients();
 
     @Transactional
