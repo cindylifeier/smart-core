@@ -44,7 +44,7 @@ public class ClientRestController {
 
     @PutMapping("/clients/{clientId}")
     public void updateClient(@PathVariable("clientId") String clientId, @Valid @RequestBody ClientDetailDto clientDto) {
-        clientService.createClient(clientDto);
+        clientService.updateClient(clientId, clientDto);
     }
 
 }
