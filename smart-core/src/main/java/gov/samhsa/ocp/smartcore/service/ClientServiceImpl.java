@@ -1,11 +1,13 @@
 package gov.samhsa.ocp.smartcore.service;
 
+import feign.FeignException;
 import gov.samhsa.ocp.smartcore.config.SmartCoreProperties;
 import gov.samhsa.ocp.smartcore.infrastructure.OAuth2ClientRestClient;
 import gov.samhsa.ocp.smartcore.infrastructure.dto.ClientDto;
 import gov.samhsa.ocp.smartcore.infrastructure.dto.ClientMetaDto;
 import gov.samhsa.ocp.smartcore.service.dto.ClientDetailDto;
 import gov.samhsa.ocp.smartcore.service.dto.ClientType;
+import gov.samhsa.ocp.smartcore.util.ExceptionUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,18 +43,23 @@ public class ClientServiceImpl implements ClientService {
         if(clientDetailDto.getClientType().equals(ClientType.PUBLIC)){
             clientDetailDto.setClientSecret(smartCoreProperties.getPublicClientSecret());
         }
-        final ClientDto clientDto = oAuth2ClientRestClient.createClient(modelMapper.map(clientDetailDto, ClientDto.class));
-        final ClientMetaDto clientMetaDto = oAuth2ClientRestClient.createClientMeta(clientDto.getClientId(),modelMapper.map(clientDetailDto, ClientMetaDto.class));
+        try {
+            final ClientDto clientDto = oAuth2ClientRestClient.createClient(modelMapper.map(clientDetailDto, ClientDto.class));
+            final ClientMetaDto clientMetaDto = oAuth2ClientRestClient.createClientMeta(clientDto.getClientId(), modelMapper.map(clientDetailDto, ClientMetaDto.class));
+        } catch (FeignException fe){
+            ExceptionUtil.handleFeignException(fe, "Failed to create client with: " + clientDetailDto.getClientId());
+        }
     }
 
     @Override
     @Transactional
     public void updateClient(String clientId, ClientDetailDto clientDetailDto) {
-        if(clientDetailDto.getClientType().equals(ClientType.PUBLIC)){
-            clientDetailDto.setClientSecret(smartCoreProperties.getPublicClientSecret());
+        try {
+            final ClientDto clientDto = oAuth2ClientRestClient.updateClient(clientId, modelMapper.map(clientDetailDto, ClientDto.class));
+            final ClientMetaDto clientMetaDto = oAuth2ClientRestClient.createClientMeta(clientDto.getClientId(), modelMapper.map(clientDetailDto, ClientMetaDto.class));
+        }catch (FeignException fe){
+            ExceptionUtil.handleFeignException(fe, "Failed to update client with:: " + clientId);
         }
-        final ClientDto clientDto = oAuth2ClientRestClient.updateClient(clientId, modelMapper.map(clientDetailDto, ClientDto.class));
-        final ClientMetaDto clientMetaDto = oAuth2ClientRestClient.createClientMeta(clientDto.getClientId(),modelMapper.map(clientDetailDto, ClientMetaDto.class));
     }
 
     @Override
