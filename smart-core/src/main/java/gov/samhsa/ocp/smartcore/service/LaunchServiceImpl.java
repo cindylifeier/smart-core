@@ -90,4 +90,10 @@ public class LaunchServiceImpl implements LaunchService {
         final LaunchResponseDto launchResponse = modelMapper.map(launch, LaunchResponseDto.class);
         return launchResponse;
     }
+
+    @Override
+    @Transactional
+    public void delete(String launchId, Optional<String> user) {
+        launchRepository.delete(launchId);
+    }
 }

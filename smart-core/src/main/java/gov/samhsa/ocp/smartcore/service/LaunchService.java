@@ -18,4 +18,7 @@ public interface LaunchService {
 
     @Transactional(readOnly = true)
     LaunchResponseDto get(String launchId, Optional<String> user);
+
+    @Transactional
+    void delete(String launchId, Optional<String> user);
 }
