@@ -25,3 +25,9 @@ security:
       access-token-uri: ${smart-core.oauth2-token}
   basic:
     enabled: false
+---
+# updates configuration for docker environment
+spring.profiles: docker
+spring:
+  redis:
+    host: redis.ocp.com
